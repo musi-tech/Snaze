@@ -1,67 +1,74 @@
 import React, { useState } from "react";
-import { ShoppingCart, Eye } from "lucide-react";
+import { motion, AnimatePresence } from "framer-motion";
+import { ShoppingBag, Eye, Leaf } from "lucide-react";
 
-const categories = ["ALL", "STREETWEAR", "MINIMALIST", "OUTERWEAR", "TOPS", "BOTTOMS"];
+const categories = ["ALL", "TOPS", "OUTERWEAR", "BOTTOMS", "ESSENTIALS", "ACCESSORIES"];
+
 const products = [
   {
     id: 1,
-    title: "Technical Cargo Pants",
-    color: "Black",
-    price: "$189.00",
+    title: "Linen Cargo Trousers",
+    color: "Stone Beige",
+    price: "₹3,499",
     tag: "NEW",
-    image: "https://images.unsplash.com/photo-1536766820879-059fec98ec0a?auto=format&fit=crop&w=800&q=80",
-    category: "STREETWEAR",
+    image: "https://images.unsplash.com/photo-1473966968600-fa801b869a1a?auto=format&fit=crop&w=800&q=80",
+    category: "BOTTOMS",
+    material: "100% Linen",
   },
   {
     id: 2,
-    title: "Oversized Graphic Tee",
-    color: "White",
-    price: "$85.00",
+    title: "Organic Cotton Tee",
+    color: "Sage Green",
+    price: "₹1,299",
     tag: "NEW",
-    image: "https://images.unsplash.com/photo-1591047139829-d91aecb6caea?auto=format&fit=crop&w=800&q=80",
+    image: "https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?auto=format&fit=crop&w=800&q=80",
     category: "TOPS",
+    material: "Organic Cotton",
   },
   {
     id: 3,
-    title: "Minimalist Hoodie",
-    color: "Heather Gray",
-    price: "$120.00",
+    title: "Earth Tone Hoodie",
+    color: "Clay",
+    price: "₹2,199",
     tag: "NEW",
-    image: "https://images.unsplash.com/photo-1509946458702-4378df1e2560?auto=format&fit=crop&w=800&q=80",
-    category: "MINIMALIST",
+    image: "https://images.unsplash.com/photo-1556821840-3a63f15732ce?auto=format&fit=crop&w=800&q=80",
+    category: "ESSENTIALS",
+    material: "Recycled Fleece",
   },
   {
     id: 4,
-    title: "Utility Bomber Jacket",
-    color: "Olive",
-    price: "$230.00",
+    title: "Waxed Canvas Jacket",
+    color: "Forest",
+    price: "₹5,499",
     tag: "NEW",
     image: "https://images.unsplash.com/photo-1548126032-079a0fb0099d?auto=format&fit=crop&w=800&q=80",
     category: "OUTERWEAR",
+    material: "Waxed Canvas",
   },
   {
     id: 5,
-    title: "Streetwear Cap",
-    color: "Black",
-    price: "$45.00",
+    title: "Natural Dye Shirt",
+    color: "Terracotta",
+    price: "₹1,899",
     tag: "NEW",
-    image: "https://images.unsplash.com/photo-1578681994506-b8f463449011?auto=format&fit=crop&w=800&q=80",
-    category: "STREETWEAR",
+    image: "https://images.unsplash.com/photo-1598300042247-d088f8ab3a91?auto=format&fit=crop&w=800&q=80",
+    category: "TOPS",
+    material: "Natural Dye Cotton",
   },
   {
     id: 6,
-    title: "Minimalist Sweatshirt",
+    title: "Botanical Print Sweatshirt",
     color: "Cream",
-    price: "$95.00",
+    price: "₹2,499",
     tag: "NEW",
-    image: "https://images.unsplash.com/photo-1600269452121-4f2416e55c28?auto=format&fit=crop&w=800&q=80",
-    category: "MINIMALIST",
+    image: "https://images.unsplash.com/photo-1586790170083-2f9ceadc732d?auto=format&fit=crop&w=800&q=80",
+    category: "ESSENTIALS",
+    material: "100% Cotton",
   },
 ];
 
-const NewArrivals = () => {
+const NewArrivalsSection = () => {
   const [selectedCategory, setSelectedCategory] = useState("ALL");
-  const [activeProduct, setActiveProduct] = useState(null);
   const [cartItems, setCartItems] = useState([]);
 
   const filteredProducts =
@@ -70,113 +77,134 @@ const NewArrivals = () => {
       : products.filter((p) => p.category === selectedCategory);
 
   const addToCart = (product) => {
-    setCartItems([...cartItems, product]);
-    // Show a brief notification animation or feedback here
+    setCartItems((prev) => [...prev, product]);
   };
 
   return (
-    <div className="py-16 px-4 sm:px-8 md:px-16 lg:px-24 bg-gray-100">
+    <section className="py-20 md:py-28 px-4 sm:px-8 md:px-12 lg:px-20 bg-[#F7F3EE]">
       <div className="max-w-7xl mx-auto">
-        {/* Header with cart indicator */}
-        <div className="flex justify-between items-center mb-10">
-          <h2 className="text-3xl md:text-4xl font-bold tracking-tight">NEW ARRIVALS</h2>
-          <div className="flex items-center gap-4">
-            <div className="relative">
-              <ShoppingCart className="w-6 h-6" />
-              {cartItems.length > 0 && (
-                <span className="absolute -top-2 -right-2 bg-pink-600 text-white text-xs font-bold w-5 h-5 flex items-center justify-center rounded-full">
-                  {cartItems.length}
-                </span>
-              )}
-            </div>
+
+        {/* Section Header */}
+        <motion.div
+          className="flex flex-col md:flex-row md:items-end justify-between mb-12 gap-6"
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.6 }}
+        >
+          <div>
+            <p className="text-[#2D4A3E] text-xs tracking-[0.3em] uppercase font-medium mb-3 flex items-center gap-2">
+              <Leaf size={12} />
+              Sustainably Made
+            </p>
+            <h2 className="text-4xl md:text-5xl font-black text-[#1C1C1A] uppercase tracking-tight leading-none">
+              New Arrivals
+            </h2>
+          </div>
+          <div className="flex items-center gap-6">
+            {cartItems.length > 0 && (
+              <span className="text-xs text-[#2D4A3E] font-semibold tracking-wider">
+                {cartItems.length} item{cartItems.length > 1 ? "s" : ""} added
+              </span>
+            )}
             <a
               href="#"
-              className="text-sm font-medium border-b-2 border-black hover:text-pink-600 hover:border-pink-600 transition-colors duration-300"
+              className="text-xs font-semibold text-[#1C1C1A] tracking-[0.15em] uppercase border-b-2 border-[#2D4A3E] pb-0.5 hover:text-[#2D4A3E] transition-colors duration-300"
             >
-              View All
+              View All →
             </a>
           </div>
-        </div>
+        </motion.div>
 
         {/* Filter Buttons */}
-        <div className="flex flex-wrap gap-3 mb-12">
+        <motion.div
+          className="flex flex-wrap gap-2 md:gap-3 mb-12"
+          initial={{ opacity: 0 }}
+          whileInView={{ opacity: 1 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.5, delay: 0.2 }}
+        >
           {categories.map((cat) => (
             <button
               key={cat}
               onClick={() => setSelectedCategory(cat)}
-              className={`px-5 py-2 border rounded-full text-sm font-medium transition-all duration-300 ${
-                selectedCategory === cat
-                  ? "bg-black text-white border-black shadow-md"
-                  : "bg-white text-black border-gray-300 hover:bg-gray-100"
-              }`}
+              className={`px-5 py-2 text-xs font-semibold tracking-[0.15em] uppercase transition-all duration-300 ${selectedCategory === cat
+                  ? "bg-[#2D4A3E] text-[#C8B89A]"
+                  : "bg-white text-[#5A5A58] border border-[#E0D9CF] hover:border-[#2D4A3E] hover:text-[#2D4A3E]"
+                }`}
             >
               {cat}
             </button>
           ))}
-        </div>
+        </motion.div>
 
-        {/* Products Grid with animations */}
-        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {filteredProducts.map((product) => (
-            <div 
-              key={product.id} 
-              className="group relative overflow-hidden bg-white rounded-lg shadow-sm hover:shadow-xl transition-shadow duration-300"
-              onMouseEnter={() => setActiveProduct(product.id)}
-              onMouseLeave={() => setActiveProduct(null)}
-            >
-              <div className="relative w-full h-80 overflow-hidden">
-                <img
-                  src={product.image}
-                  alt={product.title}
-                  className="w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-700"
-                />
-                
-                {/* Overlay with actions on hover */}
-                <div className={`absolute inset-0 bg-black bg-opacity-30 flex items-center justify-center gap-4 opacity-0 group-hover:opacity-100 transition-opacity duration-300`}>
-                  <button 
+        {/* Products Grid */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
+          <AnimatePresence>
+            {filteredProducts.map((product, index) => (
+              <motion.div
+                key={product.id}
+                layout
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: 10 }}
+                transition={{ duration: 0.4, delay: index * 0.07 }}
+                className="group bg-white overflow-hidden"
+              >
+                {/* Image */}
+                <div className="relative overflow-hidden h-80 bg-[#F0EBE3]">
+                  <img
+                    src={product.image}
+                    alt={product.title}
+                    className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+                  />
+
+                  {/* Overlay actions */}
+                  <div className="absolute inset-0 bg-[#1C1C1A]/40 flex items-center justify-center gap-3 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                    <button
+                      onClick={() => addToCart(product)}
+                      className="w-11 h-11 bg-white text-[#1C1C1A] flex items-center justify-center hover:bg-[#2D4A3E] hover:text-white transition-colors duration-300"
+                    >
+                      <ShoppingBag size={16} />
+                    </button>
+                    <button className="w-11 h-11 bg-white text-[#1C1C1A] flex items-center justify-center hover:bg-[#2D4A3E] hover:text-white transition-colors duration-300">
+                      <Eye size={16} />
+                    </button>
+                  </div>
+
+                  {/* NEW tag */}
+                  {product.tag && (
+                    <span className="absolute top-4 left-4 bg-[#2D4A3E] text-[#C8B89A] text-[10px] font-bold tracking-[0.2em] uppercase px-3 py-1.5">
+                      {product.tag}
+                    </span>
+                  )}
+                </div>
+
+                {/* Product info */}
+                <div className="p-5">
+                  <div className="flex justify-between items-start mb-1">
+                    <h3 className="text-sm font-bold text-[#1C1C1A] tracking-wide uppercase">{product.title}</h3>
+                    <p className="text-sm font-bold text-[#2D4A3E] ml-2 shrink-0">{product.price}</p>
+                  </div>
+                  <p className="text-xs text-[#8A8A88] mb-1">{product.color}</p>
+                  <p className="text-xs text-[#2D4A3E] font-medium flex items-center gap-1">
+                    <Leaf size={10} /> {product.material}
+                  </p>
+
+                  <button
                     onClick={() => addToCart(product)}
-                    className="bg-white text-black p-3 rounded-full hover:bg-pink-600 hover:text-white transform hover:scale-110 transition-all duration-300 flex items-center justify-center"
+                    className="mt-5 w-full py-3 bg-[#1C1C1A] text-white text-xs font-bold tracking-[0.2em] uppercase hover:bg-[#2D4A3E] transition-colors duration-300 flex items-center justify-center gap-2 opacity-0 group-hover:opacity-100 translate-y-2 group-hover:translate-y-0 transition-all md:flex"
                   >
-                    <ShoppingCart className="w-5 h-5" />
-                  </button>
-                  <button 
-                    className="bg-white text-black p-3 rounded-full hover:bg-pink-600 hover:text-white transform hover:scale-110 transition-all duration-300 flex items-center justify-center"
-                  >
-                    <Eye className="w-5 h-5" />
+                    <ShoppingBag size={12} /> Add to Bag
                   </button>
                 </div>
-                
-                {/* Tag label */}
-                {product.tag && (
-                  <span className="absolute top-3 left-3 bg-pink-600 text-white text-xs font-bold px-3 py-1.5 rounded-full">
-                    {product.tag}
-                  </span>
-                )}
-              </div>
-              
-              {/* Product info */}
-              <div className="p-4">
-                <div className="flex justify-between items-center">
-                  <h3 className="text-lg font-semibold">{product.title}</h3>
-                  <p className="text-lg font-bold text-pink-600">{product.price}</p>
-                </div>
-                <p className="text-sm text-gray-600 mt-1">{product.color}</p>
-                
-                {/* Add to cart button that appears on mobile or always visible */}
-                <button 
-                  onClick={() => addToCart(product)}
-                  className="mt-4 w-full py-2 bg-black text-white rounded hover:bg-pink-600 transition-colors duration-300 flex items-center justify-center gap-2 md:opacity-0 md:group-hover:opacity-100 transform md:translate-y-2 md:group-hover:translate-y-0 transition-all duration-300"
-                >
-                  <ShoppingCart className="w-4 h-4" />
-                  <span>Add to Cart</span>
-                </button>
-              </div>
-            </div>
-          ))}
+              </motion.div>
+            ))}
+          </AnimatePresence>
         </div>
       </div>
-    </div>
+    </section>
   );
 };
 
-export default NewArrivals;
+export default NewArrivalsSection;
